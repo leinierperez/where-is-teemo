@@ -41,7 +41,8 @@ function useLevels() {
       setErrorData(error.message);
       return;
     }
-    setLevels(data);
+    const sortedData: Levels = data.sort((a, b) => a.id - b.id);
+    setLevels(sortedData);
   };
 
   useEffect(() => {
