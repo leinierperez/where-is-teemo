@@ -18,7 +18,7 @@ type ChampionIcon = {
   url: string;
 };
 
-type Level = {
+export type Level = {
   id: number;
   name: string;
   imageURL: string;
