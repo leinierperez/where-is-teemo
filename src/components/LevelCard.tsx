@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import { Level } from '../hooks/useLevels';
 function LevelCard({ level }: { level: Level }) {
   return (
-    <div
-      className="cursor-pointer overflow-hidden rounded-md transition-transform duration-200 hover:scale-105 focus:rounded-sm focus:border-4 focus:border-primary-500 focus:outline-none"
-      tabIndex={0}
+    <Link
+      to={`/level/${level.id}`}
+      className="block overflow-hidden rounded-md transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white"
     >
       <img
         src={level.imageURL}
@@ -23,7 +24,7 @@ function LevelCard({ level }: { level: Level }) {
           })}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
