@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import supabase from '../supabaseClient';
 
-type Position = {
+export type Position = {
   minX: number;
   maxX: number;
   minY: number;
   maxY: number;
 };
 
-type ChampionPosition = {
+export type ChampionPosition = {
   name: string;
   position: Position;
 };
 
-type ChampionIcon = {
+export type ChampionIcon = {
   name: string;
   url: string;
 };
@@ -26,7 +26,7 @@ export type Level = {
   championPositions: ChampionPosition[];
 };
 
-type Levels = Level[];
+export type Levels = Level[];
 
 function useLevels() {
   const [levels, setLevels] = useState<Levels>([]);
