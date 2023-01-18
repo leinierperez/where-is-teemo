@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  @apply bg-gray-100;
+}
+
+#root {
+  background-image: url('./assets/background/1920.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-position: center;
+}
+
+@media (max-width: 1800px) {
+  #root {
+    background-image: url('./assets/background/large.png');
+  }
+}
+
+@media (max-width: 1600px) {
+  #root {
+    background-image: url('./assets/background/medium.png');
+  }
+}
+
+@media (max-width: 1300px) {
+  #root {
+    background-image: url('./assets/background/small.png');
+  }
+}
