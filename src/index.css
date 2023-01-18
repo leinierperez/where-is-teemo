@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
+.home-main {
   background-image: url('./assets/background/1920.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -10,19 +10,19 @@
 }
 
 @media (max-width: 1800px) {
-  #root {
+  .home-main {
     background-image: url('./assets/background/large.png');
   }
 }
 
 @media (max-width: 1600px) {
-  #root {
+  .home-main {
     background-image: url('./assets/background/medium.png');
   }
 }
 
 @media (max-width: 1300px) {
-  #root {
+  .home-main {
     background-image: url('./assets/background/small.png');
   }
 }
