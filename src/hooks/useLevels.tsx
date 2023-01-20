@@ -43,6 +43,7 @@ function useLevels() {
     }
     const sortedData: Levels = data.sort((a, b) => a.id - b.id);
     setLevels(sortedData);
+    setIsLoading(false);
   };
 
   useEffect(() => {
