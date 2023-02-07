@@ -2,7 +2,7 @@ import teemo from '../assets/teemo.png';
 import { useParams } from 'react-router-dom';
 import Timer from './Timer';
 
-function Navbar() {
+function Navbar({ isGameOver }: { isGameOver: boolean }) {
   const { id } = useParams();
   return (
     <header
@@ -15,7 +15,7 @@ function Navbar() {
           <img className="h-20 w-20" src={teemo} />
           <h1 className="">Where's Teemo?</h1>
         </div>
-        {id && <Timer />}
+        {id && <Timer isGameOver={isGameOver} />}
         <nav>
           <ul>
             <li>Leaderboard</li>

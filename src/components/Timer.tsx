@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function Timer() {
+function Timer({ isGameOver }: { isGameOver: boolean }) {
   const [seconds, setSeconds] = useState(0);
   const newSeconds = seconds % 60;
   const minutes = Math.floor(seconds / 60) % 60;
@@ -13,11 +13,15 @@ function Timer() {
     const interval = setInterval(() => {
       setSeconds(seconds + 1);
     }, 1000);
+    if (isGameOver) {
+      clearInterval(interval);
+      setSeconds(0);
+    }
 
     return () => {
       clearInterval(interval);
     };
-  }, [seconds]);
+  }, [seconds, isGameOver]);
 
   return (
     <div>
