@@ -2,10 +2,16 @@ import teemo from '../assets/teemo.png';
 import { useParams } from 'react-router-dom';
 import Timer from './Timer';
 
-function Navbar({ isGameOver }: { isGameOver: boolean }) {
+type NavbarProps = {
+  isGameOver: boolean;
+  navbarRef: React.MutableRefObject<HTMLElement | null>;
+};
+
+function Navbar({ isGameOver, navbarRef }: NavbarProps) {
   const { id } = useParams();
   return (
     <header
+      ref={navbarRef}
       className={`bg-secondary py-1 px-4 text-lg font-bold text-primary-100 sm:text-3xl ${
         id && 'sticky top-0 z-10'
       }`}
