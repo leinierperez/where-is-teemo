@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { ChampionIcon } from '../hooks/useLevels';
 
 type ChampionPickerProps = {
@@ -13,6 +13,7 @@ type ChampionPickerProps = {
   championsFound: string[];
   levelImgRef: React.MutableRefObject<HTMLImageElement | null>;
   navbarRef: React.MutableRefObject<HTMLElement | null>;
+  setIsPickerShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function ChampionPicker({
@@ -22,8 +23,19 @@ function ChampionPicker({
   championsFound,
   levelImgRef,
   navbarRef,
+  setIsPickerShown,
 }: ChampionPickerProps) {
   const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPickerShown(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (!ref.current || !levelImgRef.current || !navbarRef.current) return;

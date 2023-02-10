@@ -21,13 +21,13 @@ function Level({ isGameOver, setIsGameOver, navbarRef }: LevelProps) {
     championX: 0,
     championY: 0,
   });
-  const [isViewerShown, setIsViewerShown] = useState(false);
+  const [isPickerShown, setIsPickerShown] = useState(false);
   const [championsFound, setChampionsFound] = useState<string[]>([]);
   const levelImgRef = useRef<HTMLImageElement | null>(null);
 
   const handleClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-    setIsViewerShown(!isViewerShown);
-    if (isViewerShown) return;
+    setIsPickerShown(!isPickerShown);
+    if (isPickerShown) return;
     const { offsetX, offsetY } = e.nativeEvent;
     const { width, height } = e.currentTarget.getBoundingClientRect();
     const x = Math.round((offsetX / width) * 100);
@@ -50,13 +50,13 @@ function Level({ isGameOver, setIsGameOver, navbarRef }: LevelProps) {
     ) {
       setChampionsFound([...championsFound, name]);
     }
-    setIsViewerShown(false);
+    setIsPickerShown(false);
   };
 
   return (
     <main className="min-h-screen w-full">
       <div className="relative flex justify-center">
-        {isViewerShown && (
+        {isPickerShown && (
           <ChampionPicker
             icons={level?.championIcons}
             clickedPosition={clickedPosition}
@@ -64,6 +64,7 @@ function Level({ isGameOver, setIsGameOver, navbarRef }: LevelProps) {
             championsFound={championsFound}
             levelImgRef={levelImgRef}
             navbarRef={navbarRef}
+            setIsPickerShown={setIsPickerShown}
           />
         )}
         <img
