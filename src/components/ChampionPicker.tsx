@@ -4,15 +4,14 @@ import { ChampionIcon } from '../hooks/useLevels';
 type ChampionPickerProps = {
   icons?: ChampionIcon[];
   clickedPosition: {
-    offsetX: number;
-    offsetY: number;
+    pageX: number;
+    pageY: number;
     championX: number;
     championY: number;
   };
   isChampionFound: (name: string) => void;
   championsFound: string[];
   levelImgRef: React.MutableRefObject<HTMLImageElement | null>;
-  navbarRef: React.MutableRefObject<HTMLElement | null>;
   setIsPickerShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -22,7 +21,6 @@ function ChampionPicker({
   isChampionFound,
   championsFound,
   levelImgRef,
-  navbarRef,
   setIsPickerShown,
 }: ChampionPickerProps) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -38,37 +36,33 @@ function ChampionPicker({
   }, []);
 
   useLayoutEffect(() => {
-    if (!ref.current || !levelImgRef.current || !navbarRef.current) return;
-    let left = clickedPosition.offsetX + 20;
-    let top = clickedPosition.offsetY + 20;
-    const navbarHeight = navbarRef.current.clientHeight;
-    const imageWidth = ref.current.scrollWidth;
-    const imageHeight = ref.current.scrollHeight;
+    if (!ref.current || !levelImgRef.current) return;
+    const spaceFromCursor = 20;
+    let left = clickedPosition.pageX + spaceFromCursor;
+    let top = clickedPosition.pageY + spaceFromCursor;
+    const championPickerWidth = ref.current.scrollWidth;
+    const championPickerHeight = ref.current.scrollHeight;
     const innerHeight = window.innerHeight;
     const scrollY = window.scrollY;
-    const minWidth = left + imageWidth;
-    const minHeight = top + imageHeight;
-    const maxHeight = innerHeight - navbarHeight + scrollY;
-    const maxWidth = levelImgRef.current.width;
+    const minWidth = left + championPickerWidth;
+    const minHeight = top + championPickerHeight;
+    const maxHeight = innerHeight + scrollY;
+    const maxWidth = window.innerWidth;
     if (minWidth > maxWidth) {
-      left = maxWidth - imageWidth - imageWidth / 4;
+      left = maxWidth - championPickerWidth - championPickerWidth / 4;
     }
     if (minHeight > maxHeight) {
-      top =
-        innerHeight - imageHeight + scrollY - navbarHeight - imageHeight / 4;
+      top = maxHeight - championPickerHeight - championPickerHeight / 4;
     }
-
-    left = (left / maxWidth) * 100;
-    top = (top / levelImgRef.current.height) * 100;
-    ref.current.style.left = `${left}%`;
-    ref.current.style.top = `${top}%`;
+    ref.current.style.left = `${left}px`;
+    ref.current.style.top = `${top}px`;
   }, []);
 
   return (
     <>
       <div
         ref={ref}
-        className="absolute rounded-lg bg-secondary text-primary-100 hover:cursor-pointer"
+        className="absolute z-10 rounded-lg bg-secondary text-primary-100 hover:cursor-pointer"
       >
         <ul>
           {icons?.map((icon, i) => {

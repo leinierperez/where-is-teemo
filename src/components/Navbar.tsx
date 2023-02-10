@@ -4,16 +4,14 @@ import Timer from './Timer';
 
 type NavbarProps = {
   isGameOver: boolean;
-  navbarRef: React.MutableRefObject<HTMLElement | null>;
 };
 
-function Navbar({ isGameOver, navbarRef }: NavbarProps) {
+function Navbar({ isGameOver }: NavbarProps) {
   const { id } = useParams();
   return (
     <header
-      ref={navbarRef}
       className={`bg-secondary py-1 px-4 text-lg font-bold text-primary-100 sm:text-3xl ${
-        id && 'sticky top-0 z-10'
+        id && 'sticky top-0 z-20'
       }`}
     >
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between">

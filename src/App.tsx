@@ -4,23 +4,18 @@ import Home from './pages/Home';
 import Error from './pages/Error';
 import Root from './layouts/Root';
 import Level from './pages/Level';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [isGameOver, setIsGameOver] = useState(false);
-  const navbarRef = useRef<HTMLElement | null>(null);
   return (
     <Routes>
-      <Route element={<Root isGameOver={isGameOver} navbarRef={navbarRef} />}>
+      <Route element={<Root isGameOver={isGameOver} />}>
         <Route index element={<Home />}></Route>
         <Route
           path="/level/:id"
           element={
-            <Level
-              isGameOver={isGameOver}
-              setIsGameOver={setIsGameOver}
-              navbarRef={navbarRef}
-            />
+            <Level isGameOver={isGameOver} setIsGameOver={setIsGameOver} />
           }
         ></Route>
       </Route>

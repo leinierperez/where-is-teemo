@@ -8,16 +8,15 @@ import { isClickPositionInChampionPosition } from '../utils';
 type LevelProps = {
   isGameOver: boolean;
   setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
-  navbarRef: React.MutableRefObject<HTMLElement | null>;
 };
 
-function Level({ isGameOver, setIsGameOver, navbarRef }: LevelProps) {
+function Level({ isGameOver, setIsGameOver }: LevelProps) {
   const { id } = useParams();
   const [levels] = useLevels();
   const level = levels.find((level) => level.id === Number(id));
   const [clickedPosition, setClickedPosition] = useState({
-    offsetX: 0,
-    offsetY: 0,
+    pageX: 0,
+    pageY: 0,
     championX: 0,
     championY: 0,
   });
@@ -28,13 +27,13 @@ function Level({ isGameOver, setIsGameOver, navbarRef }: LevelProps) {
   const handleClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     setIsPickerShown(!isPickerShown);
     if (isPickerShown) return;
-    const { offsetX, offsetY } = e.nativeEvent;
+    const { pageX, pageY, offsetX, offsetY } = e.nativeEvent;
     const { width, height } = e.currentTarget.getBoundingClientRect();
     const x = Math.round((offsetX / width) * 100);
     const y = Math.round((offsetY / height) * 100);
     setClickedPosition({
-      offsetX,
-      offsetY,
+      pageX,
+      pageY,
       championX: x,
       championY: y,
     });
@@ -55,18 +54,17 @@ function Level({ isGameOver, setIsGameOver, navbarRef }: LevelProps) {
 
   return (
     <main className="min-h-screen w-full">
+      {isPickerShown && (
+        <ChampionPicker
+          icons={level?.championIcons}
+          clickedPosition={clickedPosition}
+          isChampionFound={isChampionFound}
+          championsFound={championsFound}
+          levelImgRef={levelImgRef}
+          setIsPickerShown={setIsPickerShown}
+        />
+      )}
       <div className="relative flex justify-center">
-        {isPickerShown && (
-          <ChampionPicker
-            icons={level?.championIcons}
-            clickedPosition={clickedPosition}
-            isChampionFound={isChampionFound}
-            championsFound={championsFound}
-            levelImgRef={levelImgRef}
-            navbarRef={navbarRef}
-            setIsPickerShown={setIsPickerShown}
-          />
-        )}
         <img
           src={level?.imageURL}
           ref={levelImgRef}

@@ -3,13 +3,12 @@ import Navbar from '../components/Navbar';
 
 type RootProps = {
   isGameOver: boolean;
-  navbarRef: React.MutableRefObject<HTMLElement | null>;
 };
 
-function Root({ isGameOver, navbarRef }: RootProps) {
+function Root({ isGameOver }: RootProps) {
   return (
     <>
-      <Navbar isGameOver={isGameOver} navbarRef={navbarRef} />
+      <Navbar isGameOver={isGameOver} />
       <Outlet />
     </>
   );
