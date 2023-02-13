@@ -23,9 +23,8 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
   });
   const [isPickerShown, setIsPickerShown] = useState(false);
   const [championsFound, setChampionsFound] = useState<string[]>([]);
-  const levelImgRef = useRef<HTMLImageElement | null>(null);
   const [isStatusShown, setIsStatusShown] = useState(false);
-  const [championFound, setChampionFound] = useState(false);
+  const [isChampionFound, setChampionFound] = useState(false);
   const statusTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   const handleClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
@@ -43,7 +42,7 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
     });
   };
 
-  const isChampionFound = (name: string) => {
+  const handleChampionChoice = (name: string) => {
     clearTimeout(statusTimeoutRef.current);
     const targetChampion = level?.championPositions.find(
       (pos) => pos.name === name
@@ -74,9 +73,8 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
         <ChampionPicker
           icons={level?.championIcons}
           clickedPosition={clickedPosition}
-          isChampionFound={isChampionFound}
+          handleChampionChoice={handleChampionChoice}
           championsFound={championsFound}
-          levelImgRef={levelImgRef}
           setIsPickerShown={setIsPickerShown}
         />
       )}
@@ -84,12 +82,11 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
         {isStatusShown && (
           <Status
             championsFound={championsFound}
-            championFound={championFound}
+            isChampionFound={isChampionFound}
           />
         )}
         <img
           src={level?.imageURL}
-          ref={levelImgRef}
           className="w-full"
           style={{
             cursor: `url('${cursorIMG}') 27 27, auto`,

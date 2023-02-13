@@ -9,18 +9,16 @@ type ChampionPickerProps = {
     championX: number;
     championY: number;
   };
-  isChampionFound: (name: string) => void;
+  handleChampionChoice: (name: string) => void;
   championsFound: string[];
-  levelImgRef: React.MutableRefObject<HTMLImageElement | null>;
   setIsPickerShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function ChampionPicker({
   icons,
   clickedPosition,
-  isChampionFound,
+  handleChampionChoice,
   championsFound,
-  levelImgRef,
   setIsPickerShown,
 }: ChampionPickerProps) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -36,7 +34,7 @@ function ChampionPicker({
   }, []);
 
   useLayoutEffect(() => {
-    if (!ref.current || !levelImgRef.current) return;
+    if (!ref.current) return;
     const spaceFromCursor = 20;
     let left = clickedPosition.pageX + spaceFromCursor;
     let top = clickedPosition.pageY + spaceFromCursor;
@@ -71,7 +69,7 @@ function ChampionPicker({
               <li
                 className="flex items-center gap-3 py-2 px-4 first:rounded-t-lg last:rounded-b-lg hover:bg-primary-100 hover:text-white"
                 key={i}
-                onClick={() => isChampionFound(icon.name)}
+                onClick={() => handleChampionChoice(icon.name)}
               >
                 <img className="h-9 w-9" src={icon.url} />
                 <p className="">{icon.name}</p>
