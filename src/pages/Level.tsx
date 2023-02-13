@@ -4,6 +4,7 @@ import useLevels from '../hooks/useLevels';
 import cursorIMG from '../assets/cursor.svg';
 import ChampionPicker from '../components/ChampionPicker';
 import { isClickPositionInChampionPosition } from '../utils';
+import Status from '../components/Status';
 
 type LevelProps = {
   isGameOver: boolean;
@@ -23,6 +24,9 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
   const [isPickerShown, setIsPickerShown] = useState(false);
   const [championsFound, setChampionsFound] = useState<string[]>([]);
   const levelImgRef = useRef<HTMLImageElement | null>(null);
+  const [isStatusShown, setIsStatusShown] = useState(false);
+  const [championFound, setChampionFound] = useState(false);
+  const statusTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   const handleClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     setIsPickerShown(!isPickerShown);
@@ -40,6 +44,7 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
   };
 
   const isChampionFound = (name: string) => {
+    clearTimeout(statusTimeoutRef.current);
     const targetChampion = level?.championPositions.find(
       (pos) => pos.name === name
     );
@@ -48,8 +53,19 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
       isClickPositionInChampionPosition(clickedPosition, targetChampion)
     ) {
       setChampionsFound([...championsFound, name]);
+      setChampionFound(true);
+    } else {
+      setChampionFound(false);
     }
     setIsPickerShown(false);
+    showStatus();
+  };
+
+  const showStatus = () => {
+    setIsStatusShown(true);
+    statusTimeoutRef.current = setTimeout(() => {
+      setIsStatusShown(false);
+    }, 2000);
   };
 
   return (
@@ -64,7 +80,13 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
           setIsPickerShown={setIsPickerShown}
         />
       )}
-      <div className="relative flex justify-center">
+      <div className="flex justify-center">
+        {isStatusShown && (
+          <Status
+            championsFound={championsFound}
+            championFound={championFound}
+          />
+        )}
         <img
           src={level?.imageURL}
           ref={levelImgRef}
