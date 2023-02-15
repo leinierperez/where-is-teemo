@@ -5,6 +5,7 @@ import Error from './pages/Error';
 import Root from './layouts/Root';
 import Level from './pages/Level';
 import { useState } from 'react';
+import Leaderboard from './pages/Leaderboard';
 
 function App() {
   const [isGameOver, setIsGameOver] = useState(false);
@@ -18,6 +19,7 @@ function App() {
             <Level isGameOver={isGameOver} setIsGameOver={setIsGameOver} />
           }
         ></Route>
+        <Route path="/leaderboard" element={<Leaderboard />}></Route>
       </Route>
       <Route path="*" element={<Error />}></Route>
     </Routes>
