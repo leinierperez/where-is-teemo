@@ -7,12 +7,7 @@ import { isClickPositionInChampionPosition } from '../utils';
 import Status from '../components/Status';
 import GameOverModal from '../components/GameOverModal';
 
-type LevelProps = {
-  isGameOver: boolean;
-  setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-function Level({ isGameOver, setIsGameOver }: LevelProps) {
+function Level() {
   const { id } = useParams();
   const [levels] = useLevels();
   const level = levels.find((level) => level.id === Number(id));
@@ -28,6 +23,7 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
   const [isChampionFound, setChampionFound] = useState(false);
   const statusTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const [elapsedSeconds, setElapsedSeconds] = useState(Date.now());
+  const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
     if (championsFound.length === level?.championPositions.length) {

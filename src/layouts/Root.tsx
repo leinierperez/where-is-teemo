@@ -1,14 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
-type RootProps = {
-  isGameOver: boolean;
-};
-
-function Root({ isGameOver }: RootProps) {
+function Root() {
   return (
     <>
-      <Navbar isGameOver={isGameOver} />
+      <Navbar />
       <Outlet />
     </>
   );
