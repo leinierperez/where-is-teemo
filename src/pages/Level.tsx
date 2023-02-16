@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useLevels from '../hooks/useLevels';
 import cursorIMG from '../assets/cursor.svg';
 import ChampionPicker from '../components/ChampionPicker';
 import { isClickPositionInChampionPosition } from '../utils';
 import Status from '../components/Status';
+import GameOverModal from '../components/GameOverModal';
 
 type LevelProps = {
   isGameOver: boolean;
@@ -26,6 +27,14 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
   const [isStatusShown, setIsStatusShown] = useState(false);
   const [isChampionFound, setChampionFound] = useState(false);
   const statusTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const [elapsedSeconds, setElapsedSeconds] = useState(Date.now());
+
+  useEffect(() => {
+    if (championsFound.length === level?.championPositions.length) {
+      setIsGameOver(true);
+      setElapsedSeconds((Date.now() - elapsedSeconds) / 1000);
+    }
+  }, [championsFound]);
 
   const handleClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     setIsPickerShown(!isPickerShown);
@@ -78,7 +87,14 @@ function Level({ isGameOver, setIsGameOver }: LevelProps) {
           setIsPickerShown={setIsPickerShown}
         />
       )}
-      <div className="flex justify-center">
+      <div className="relative flex justify-center">
+        {isGameOver && (
+          <GameOverModal
+            elapsedSeconds={elapsedSeconds}
+            setIsGameOver={setIsGameOver}
+            setChampionsFound={setChampionsFound}
+          />
+        )}
         {isStatusShown && (
           <Status
             championsFound={championsFound}
