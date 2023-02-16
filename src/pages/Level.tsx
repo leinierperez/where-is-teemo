@@ -1,15 +1,14 @@
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
-import useLevels from '../hooks/useLevels';
+import { Levels } from '../hooks/useLevels';
 import cursorIMG from '../assets/cursor.svg';
 import ChampionPicker from '../components/ChampionPicker';
 import { isClickPositionInChampionPosition } from '../utils';
 import Status from '../components/Status';
 import GameOverModal from '../components/GameOverModal';
 
-function Level() {
+function Level({ levels }: { levels: Levels }) {
   const { id } = useParams();
-  const [levels] = useLevels();
   const level = levels.find((level) => level.id === Number(id));
   const [clickedPosition, setClickedPosition] = useState({
     pageX: 0,
