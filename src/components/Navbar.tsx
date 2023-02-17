@@ -1,5 +1,5 @@
 import teemo from '../assets/teemo.png';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function Navbar() {
   const { id } = useParams();
@@ -10,13 +10,17 @@ function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between">
-        <div className="flex items-center gap-4">
-          <img className="h-20 w-20" src={teemo} />
-          <h1 className="">Where's Teemo?</h1>
-        </div>
+        <Link to="/">
+          <div className="flex items-center gap-4">
+            <img className="h-20 w-20" src={teemo} />
+            <h1 className="block">Where's Teemo?</h1>
+          </div>
+        </Link>
         <nav>
           <ul>
-            <li>Leaderboard</li>
+            <li>
+              <Link to="/leaderboard">Leaderboard</Link>
+            </li>
           </ul>
         </nav>
       </div>
