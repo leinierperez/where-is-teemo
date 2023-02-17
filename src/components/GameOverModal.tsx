@@ -6,12 +6,14 @@ type GameOverModalProps = {
   elapsedSeconds: number;
   setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   setChampionsFound: React.Dispatch<React.SetStateAction<string[]>>;
+  setCurrentLevel: React.Dispatch<React.SetStateAction<number | undefined>>;
 };
 
 function GameOverModal({
   elapsedSeconds,
   setIsGameOver,
   setChampionsFound,
+  setCurrentLevel,
 }: GameOverModalProps) {
   const [username, setUsername] = useState<string>('');
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ function GameOverModal({
     e.preventDefault();
     setIsGameOver(false);
     setChampionsFound([]);
+    setCurrentLevel(Number(id));
     await saveScore();
   };
 

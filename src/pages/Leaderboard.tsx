@@ -3,8 +3,17 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { Levels } from '../hooks/useLevels';
 import useScores from '../hooks/useScores';
 
-function Leaderboard({ levels }: { levels: Levels }) {
-  const [currentLevel, setCurrentLevel] = useState<number>(1);
+type LeaderboardProps = {
+  levels: Levels;
+  currentLevel: number | undefined;
+  setCurrentLevel: React.Dispatch<React.SetStateAction<number | undefined>>;
+};
+
+function Leaderboard({
+  levels,
+  currentLevel,
+  setCurrentLevel,
+}: LeaderboardProps) {
   const [scores, isLoading, isError] = useScores(currentLevel);
 
   const handleClick = (levelId: number) => {

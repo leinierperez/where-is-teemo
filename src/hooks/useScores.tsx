@@ -6,7 +6,7 @@ type Score = {
   levelTimeScore: number;
 };
 
-function useScores(currentLevel: number) {
+function useScores(currentLevel: number | undefined) {
   const [scores, setScores] = useState<Score[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
