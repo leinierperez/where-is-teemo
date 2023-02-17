@@ -14,7 +14,7 @@ function App() {
       <Route element={<Root />}>
         <Route index element={<Home levels={levels} />} />
         <Route path="/level/:id" element={<Level levels={levels} />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/leaderboard" element={<Leaderboard levels={levels} />} />
       </Route>
       <Route path="*" element={<Error />} />
     </Routes>
