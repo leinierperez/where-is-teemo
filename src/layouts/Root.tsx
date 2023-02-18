@@ -1,10 +1,16 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { Levels } from '../hooks/useLevels';
 
-function Root() {
+type RootProps = {
+  levels: Levels;
+  championsFound: string[];
+};
+
+function Root({ levels, championsFound }: RootProps) {
   return (
     <>
-      <Navbar />
+      <Navbar levels={levels} championsFound={championsFound} />
       <Outlet />
     </>
   );

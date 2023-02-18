@@ -11,13 +11,22 @@ import { useState } from 'react';
 function App() {
   const [levels] = useLevels();
   const [currentLevel, setCurrentLevel] = useState<number | undefined>();
+  const [championsFound, setChampionsFound] = useState<string[]>([]);
+
   return (
     <Routes>
-      <Route element={<Root />}>
+      <Route element={<Root levels={levels} championsFound={championsFound} />}>
         <Route index element={<Home levels={levels} />} />
         <Route
           path="/level/:id"
-          element={<Level levels={levels} setCurrentLevel={setCurrentLevel} />}
+          element={
+            <Level
+              levels={levels}
+              setCurrentLevel={setCurrentLevel}
+              championsFound={championsFound}
+              setChampionsFound={setChampionsFound}
+            />
+          }
         />
         <Route
           path="/leaderboard"

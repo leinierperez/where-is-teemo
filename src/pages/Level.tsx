@@ -10,9 +10,16 @@ import GameOverModal from '../components/GameOverModal';
 type LevelProps = {
   levels: Levels;
   setCurrentLevel: React.Dispatch<React.SetStateAction<number | undefined>>;
+  championsFound: string[];
+  setChampionsFound: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-function Level({ levels, setCurrentLevel }: LevelProps) {
+function Level({
+  levels,
+  setCurrentLevel,
+  championsFound,
+  setChampionsFound,
+}: LevelProps) {
   const { id } = useParams();
   const level = levels.find((level) => level.id === Number(id));
   const [clickedPosition, setClickedPosition] = useState({
@@ -22,12 +29,15 @@ function Level({ levels, setCurrentLevel }: LevelProps) {
     championY: 0,
   });
   const [isPickerShown, setIsPickerShown] = useState(false);
-  const [championsFound, setChampionsFound] = useState<string[]>([]);
   const [isStatusShown, setIsStatusShown] = useState(false);
   const [isChampionFound, setChampionFound] = useState(false);
   const statusTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const [elapsedSeconds, setElapsedSeconds] = useState(Date.now());
   const [isGameOver, setIsGameOver] = useState(false);
+
+  useEffect(() => {
+    setChampionsFound([]);
+  }, []);
 
   useEffect(() => {
     if (championsFound.length === level?.championPositions.length) {
