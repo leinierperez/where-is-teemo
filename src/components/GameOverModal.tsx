@@ -1,34 +1,41 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import supabase from '../supabaseClient';
+import { getProfanity } from '../utils';
 
 type GameOverModalProps = {
   elapsedSeconds: number;
   setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
-  setChampionsFound: React.Dispatch<React.SetStateAction<string[]>>;
   setCurrentLevel: React.Dispatch<React.SetStateAction<number | undefined>>;
 };
 
 function GameOverModal({
   elapsedSeconds,
   setIsGameOver,
-  setChampionsFound,
   setCurrentLevel,
 }: GameOverModalProps) {
-  const [username, setUsername] = useState<string>('');
-  const navigate = useNavigate();
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [username, setUsername] = useState<string>('');
+  const [isUsernameProfane, setIsUsernameProfane] = useState(false);
+  const profanity = getProfanity();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (profanity.exists(username)) {
+      setIsUsernameProfane(true);
+      return;
+    }
     setIsGameOver(false);
-    setChampionsFound([]);
     setCurrentLevel(Number(id));
     await saveScore();
   };
 
   const handleChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
+    if (isUsernameProfane) {
+      setIsUsernameProfane(false);
+    }
   };
 
   const saveScore = async () => {
@@ -84,6 +91,11 @@ function GameOverModal({
                 value={username}
                 onChange={handleChangeUsername}
               />
+              {isUsernameProfane && (
+                <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                  Username is inappropriate!
+                </p>
+              )}
             </fieldset>
           </div>
           <div className="flex items-center justify-end gap-2 p-4">

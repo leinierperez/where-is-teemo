@@ -1,3 +1,4 @@
+import { Profanity, ProfanityOptions } from '@2toad/profanity';
 import { ChampionPosition } from '../src/hooks/useLevels';
 
 export function isClickPositionInChampionPosition(
@@ -13,4 +14,10 @@ export function isClickPositionInChampionPosition(
     clickedPosition.championY >= targetChampion.position.minY &&
     clickedPosition.championY <= targetChampion.position.maxY
   );
+}
+
+export function getProfanity() {
+  const options = new ProfanityOptions();
+  options.wholeWord = false;
+  return new Profanity(options);
 }

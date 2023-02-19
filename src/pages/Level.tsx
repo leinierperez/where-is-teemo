@@ -36,12 +36,9 @@ function Level({
   const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
-    setChampionsFound([]);
-  }, []);
-
-  useEffect(() => {
     if (championsFound.length === level?.championPositions.length) {
       setIsGameOver(true);
+      setChampionsFound([]);
       setElapsedSeconds((Date.now() - elapsedSeconds) / 1000);
     }
   }, [championsFound]);
@@ -102,7 +99,6 @@ function Level({
           <GameOverModal
             elapsedSeconds={elapsedSeconds}
             setIsGameOver={setIsGameOver}
-            setChampionsFound={setChampionsFound}
             setCurrentLevel={setCurrentLevel}
           />
         )}
