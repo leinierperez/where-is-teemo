@@ -27,7 +27,7 @@ function App() {
           }
         />
         <Route
-          path="/leaderboard/:lvlId?"
+          path="/leaderboard/:levelId?"
           element={<Leaderboard levels={levels} />}
         ></Route>
       </Route>
