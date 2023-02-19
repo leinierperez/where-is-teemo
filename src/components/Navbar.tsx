@@ -1,4 +1,4 @@
-import teemo from '../assets/teemo.png';
+import teemo from '../assets/teemo.webp';
 import { Link, useParams } from 'react-router-dom';
 import { Levels } from '../hooks/useLevels';
 

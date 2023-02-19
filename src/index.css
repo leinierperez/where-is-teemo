@@ -7,26 +7,26 @@ body {
 }
 
 .home-main {
-  background-image: url('./assets/background/1920.png');
+  background-image: url('./assets/background/background-1920.webp');
   background-repeat: no-repeat;
   background-size: cover;
   object-position: center;
 }
 
-@media (max-width: 1800px) {
-  .home-main {
-    background-image: url('./assets/background/large.png');
-  }
-}
-
 @media (max-width: 1600px) {
   .home-main {
-    background-image: url('./assets/background/medium.png');
+    background-image: url('./assets/background/background-1024.webp');
   }
 }
 
 @media (max-width: 1300px) {
   .home-main {
-    background-image: url('./assets/background/small.png');
+    background-image: url('./assets/background/background-768.webp');
+  }
+}
+
+@media (max-width: 800px) {
+  .home-main {
+    background-image: url('./assets/background/background-480.webp');
   }
 }
