@@ -1,18 +1,15 @@
 type StatusProps = {
-  isChampionFound: boolean;
-  championsFound: string[];
+  championFound: string;
 };
-function Status({ isChampionFound, championsFound }: StatusProps) {
+function Status({ championFound }: StatusProps) {
   return (
     <div
       className={`fixed z-10 mt-4 rounded-md px-2 py-1 ${
-        isChampionFound ? 'bg-green-700' : 'bg-red-700 '
+        championFound ? 'bg-green-700' : 'bg-red-700 '
       }`}
     >
       <p className="text-center text-3xl font-bold tracking-wider text-gray-100">
-        {isChampionFound
-          ? `You found ${championsFound.at(-1)}!`
-          : 'Keep Looking!'}
+        {championFound ? `You found ${championFound}!` : 'Keep Looking!'}
       </p>
     </div>
   );

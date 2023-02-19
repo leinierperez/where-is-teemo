@@ -25,7 +25,7 @@ function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
   });
   const [isPickerShown, setIsPickerShown] = useState(false);
   const [isStatusShown, setIsStatusShown] = useState(false);
-  const [isChampionFound, setChampionFound] = useState(false);
+  const [championFound, setChampionFound] = useState('');
   const statusTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const [elapsedSeconds, setElapsedSeconds] = useState(Date.now());
   const [isGameOver, setIsGameOver] = useState(false);
@@ -63,9 +63,9 @@ function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
       isClickPositionInChampionPosition(clickedPosition, targetChampion)
     ) {
       setChampionsFound([...championsFound, name]);
-      setChampionFound(true);
+      setChampionFound(name);
     } else {
-      setChampionFound(false);
+      setChampionFound('');
     }
     setIsPickerShown(false);
     showStatus();
@@ -96,12 +96,7 @@ function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
             setIsGameOver={setIsGameOver}
           />
         )}
-        {isStatusShown && (
-          <Status
-            championsFound={championsFound}
-            isChampionFound={isChampionFound}
-          />
-        )}
+        {isStatusShown && <Status championFound={championFound} />}
         <img
           src={level?.imageURL}
           className="w-full"
