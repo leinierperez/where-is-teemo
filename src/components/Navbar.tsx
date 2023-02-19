@@ -1,6 +1,7 @@
 import teemo from '../assets/teemo.webp';
 import { Link, useParams } from 'react-router-dom';
 import { Levels } from '../hooks/useLevels';
+import { getLevelById } from '../utils';
 
 type NavbarProps = {
   levels: Levels;
@@ -9,9 +10,7 @@ type NavbarProps = {
 
 function Navbar({ levels, championsFound }: NavbarProps) {
   const { id } = useParams();
-  const levelIcons = levels.find(
-    (level) => level.id === Number(id)
-  )?.championIcons;
+  const levelIcons = getLevelById(levels, Number(id))?.championIcons;
 
   return (
     <header

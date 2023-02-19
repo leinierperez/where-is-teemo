@@ -1,5 +1,5 @@
 import { Profanity, ProfanityOptions } from '@2toad/profanity';
-import { ChampionPosition } from '../src/hooks/useLevels';
+import { ChampionPosition, Levels } from '../src/hooks/useLevels';
 
 export function isClickPositionInChampionPosition(
   clickedPosition: {
@@ -20,4 +20,10 @@ export function getProfanity() {
   const options = new ProfanityOptions();
   options.wholeWord = false;
   return new Profanity(options);
+}
+
+export function getLevelById(levels: Levels, id: number) {
+  const level = levels.find((level) => level.id === id);
+  if (level) return level;
+  return levels[0];
 }

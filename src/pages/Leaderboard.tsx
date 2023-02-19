@@ -3,14 +3,14 @@ import { Link, useParams } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Levels, Level } from '../hooks/useLevels';
 import useScores from '../hooks/useScores';
+import { getLevelById } from '../utils';
 
 type LeaderboardProps = {
   levels: Levels;
 };
 
 function Leaderboard({ levels }: LeaderboardProps) {
-  const { lvlId } = useParams();
-  const lvl = levels.find((level) => level.id === Number(lvlId));
+  const { levelId } = useParams();
   const [currentLevel, setCurrentLevel] = useState<Level | undefined>();
   const [scores, isLoading, isError] = useScores(currentLevel?.id);
 
@@ -19,12 +19,13 @@ function Leaderboard({ levels }: LeaderboardProps) {
   };
 
   useEffect(() => {
-    if (lvlId) {
-      setCurrentLevel(lvl);
+    if (levelId) {
+      const level = getLevelById(levels, Number(levelId));
+      setCurrentLevel(level);
     } else {
       setCurrentLevel(levels[0]);
     }
-  }, [levels, lvlId]);
+  }, [levels, levelId]);
 
   return (
     <main className="mx-auto max-w-screen-lg py-6 px-4 font-semibold tracking-wide">

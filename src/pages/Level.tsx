@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Levels } from '../hooks/useLevels';
 import cursorIMG from '../assets/cursor.svg';
 import ChampionPicker from '../components/ChampionPicker';
-import { isClickPositionInChampionPosition } from '../utils';
+import { getLevelById, isClickPositionInChampionPosition } from '../utils';
 import Status from '../components/Status';
 import GameOverModal from '../components/GameOverModal';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -16,7 +16,7 @@ type LevelProps = {
 
 function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
   const { id } = useParams();
-  const level = levels.find((level) => level.id === Number(id));
+  const level = getLevelById(levels, Number(id));
   const [clickedPosition, setClickedPosition] = useState({
     pageX: 0,
     pageY: 0,
