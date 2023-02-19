@@ -31,6 +31,10 @@ function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
   const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
+    setChampionsFound([]);
+  }, []);
+
+  useEffect(() => {
     if (championsFound.length === level?.championPositions.length) {
       setIsGameOver(true);
       setChampionsFound([]);
