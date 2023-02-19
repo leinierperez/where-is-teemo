@@ -1,52 +1,69 @@
 import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Levels } from '../hooks/useLevels';
+import { Levels, Level } from '../hooks/useLevels';
 import useScores from '../hooks/useScores';
 
 type LeaderboardProps = {
   levels: Levels;
-  currentLevel: number | undefined;
-  setCurrentLevel: React.Dispatch<React.SetStateAction<number | undefined>>;
 };
 
-function Leaderboard({
-  levels,
-  currentLevel,
-  setCurrentLevel,
-}: LeaderboardProps) {
-  const [scores, isLoading, isError] = useScores(currentLevel);
+function Leaderboard({ levels }: LeaderboardProps) {
+  const { lvlId } = useParams();
+  const lvl = levels.find((level) => level.id === Number(lvlId));
+  const [currentLevel, setCurrentLevel] = useState<Level | undefined>();
+  const [scores, isLoading, isError] = useScores(currentLevel?.id);
 
-  const handleClick = (levelId: number) => {
+  const handleClick = (levelId: Level) => {
     setCurrentLevel(levelId);
   };
 
   useEffect(() => {
-    setCurrentLevel(levels[0]?.id);
-  }, [levels]);
+    if (lvlId) {
+      setCurrentLevel(lvl);
+    } else {
+      setCurrentLevel(levels[0]);
+    }
+  }, [levels, lvlId]);
 
   return (
     <main className="mx-auto max-w-screen-lg py-6 px-4 font-semibold tracking-wide">
-      <ul className="grid grid-cols-2 justify-items-center gap-3 sm:grid-cols-3 md:justify-items-stretch">
-        {levels.map((level, i) => {
-          return (
-            <li
-              key={i}
-              onClick={() => handleClick(level.id)}
-              className="cursor-pointer overflow-hidden rounded-sm"
-            >
-              <div className="relative">
-                <h1 className="absolute z-10 w-full bg-primary-500 text-center text-white">
-                  {level.name}
-                </h1>
-                <img
-                  src={level.imageURL}
-                  className="relative aspect-square h-40 object-cover md:w-full"
-                />
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <div>
+        <ul className="grid grid-cols-2 justify-items-center gap-3 sm:grid-cols-3 md:justify-items-stretch">
+          {levels.map((level, i) => {
+            return (
+              <Link to={`/leaderboard/${level.id}`} key={i}>
+                <li
+                  onClick={() => handleClick(level)}
+                  className="cursor-pointer overflow-hidden rounded-sm"
+                >
+                  <div className="relative">
+                    <h1
+                      className={`absolute z-10 w-full ${
+                        currentLevel?.id === level.id
+                          ? 'bg-yellow-600'
+                          : 'bg-primary-500'
+                      } text-center text-white`}
+                    >
+                      {level.name}
+                    </h1>
+                    <img
+                      src={level.imageURL}
+                      className="relative aspect-square h-40 object-cover md:w-full"
+                    />
+                  </div>
+                </li>
+              </Link>
+            );
+          })}
+        </ul>
+        <Link
+          to={`/level/${currentLevel?.id}`}
+          className="mt-4 block w-full rounded-sm bg-primary-500 p-2 text-center text-lg font-semibold tracking-wide text-white"
+        >
+          Play {currentLevel?.name}
+        </Link>
+      </div>
       <div className="mt-4 text-white">
         {isError ? (
           <p className="text-center text-3xl">

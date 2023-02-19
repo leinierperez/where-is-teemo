@@ -6,14 +6,9 @@ import { getProfanity } from '../utils';
 type GameOverModalProps = {
   elapsedSeconds: number;
   setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
-  setCurrentLevel: React.Dispatch<React.SetStateAction<number | undefined>>;
 };
 
-function GameOverModal({
-  elapsedSeconds,
-  setIsGameOver,
-  setCurrentLevel,
-}: GameOverModalProps) {
+function GameOverModal({ elapsedSeconds, setIsGameOver }: GameOverModalProps) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>('');
@@ -27,7 +22,6 @@ function GameOverModal({
       return;
     }
     setIsGameOver(false);
-    setCurrentLevel(Number(id));
     await saveScore();
   };
 
@@ -53,7 +47,7 @@ function GameOverModal({
       navigate('/error');
       return;
     }
-    navigate('/leaderboard');
+    navigate(`/leaderboard/${id}`);
   };
 
   return (
