@@ -99,7 +99,7 @@ function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
         {isStatusShown && <Status championFound={championFound} />}
         <img
           src={level?.imageURL}
-          alt={`Image for ${level.name}`}
+          alt={`Image for ${level?.name}`}
           className="w-full"
           style={{
             cursor: `url('${cursorIMG}') 27 27, auto`,
