@@ -49,6 +49,7 @@ function Leaderboard({ levels }: LeaderboardProps) {
                       {level.name}
                     </h1>
                     <img
+                      alt={`Image for ${level.name}`}
                       src={level.imageURL}
                       className="relative aspect-square h-40 object-cover md:w-full"
                     />

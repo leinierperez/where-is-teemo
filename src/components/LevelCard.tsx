@@ -7,6 +7,7 @@ function LevelCard({ level }: { level: Level }) {
       className="block overflow-hidden rounded-md transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white"
     >
       <img
+        alt={`Image for ${level.name}`}
         src={level.imageURL}
         className="h-48 w-full object-cover blur-[6px]"
       />
@@ -16,6 +17,7 @@ function LevelCard({ level }: { level: Level }) {
           {level.championIcons.map((icon, i) => {
             return (
               <img
+                alt={`Icon for champion ${icon.name}`}
                 key={i}
                 className="h-9 w-9 rounded-full border-2 border-primary-500"
                 src={icon.url}

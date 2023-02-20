@@ -71,7 +71,11 @@ function ChampionPicker({
                 key={i}
                 onClick={() => handleChampionChoice(icon.name)}
               >
-                <img className="h-9 w-9" src={icon.url} />
+                <img
+                  alt={`Icon for champion ${icon.name}`}
+                  className="h-9 w-9"
+                  src={icon.url}
+                />
                 <p className="">{icon.name}</p>
               </li>
             );

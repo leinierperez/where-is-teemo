@@ -21,7 +21,7 @@ function Navbar({ levels, championsFound }: NavbarProps) {
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between">
         <Link to="/">
           <div className="flex items-center gap-4">
-            <img className="h-20 w-20" src={teemo} />
+            <img alt="Teemo: website logo" className="h-20 w-20" src={teemo} />
             <h1 className="block">Where's Teemo?</h1>
           </div>
         </Link>
@@ -31,6 +31,7 @@ function Navbar({ levels, championsFound }: NavbarProps) {
               if (championsFound.includes(icon.name)) return;
               return (
                 <img
+                  alt={`Icon for champion ${icon.name}`}
                   className="h-12 w-12 rounded-full border-2 border-primary-100"
                   src={icon.url}
                   key={i}
