@@ -6,7 +6,6 @@ import ChampionPicker from '../components/ChampionPicker';
 import { getLevelById, isClickPositionInChampionPosition } from '../utils';
 import Status from '../components/Status';
 import GameOverModal from '../components/GameOverModal';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 type LevelProps = {
   levels: Levels;
