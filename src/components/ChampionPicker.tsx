@@ -1,14 +1,10 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { ChampionIcon } from '../hooks/useLevels';
+import { ClickedPosition } from '../types/ClickedPosition';
+import { ChampionIcon } from '../types/Level';
 
 type ChampionPickerProps = {
   icons?: ChampionIcon[];
-  clickedPosition: {
-    pageX: number;
-    pageY: number;
-    championX: number;
-    championY: number;
-  };
+  clickedPosition: ClickedPosition | undefined;
   handleChampionChoice: (name: string) => void;
   championsFound: string[];
   setIsPickerShown: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,7 +30,7 @@ function ChampionPicker({
   }, []);
 
   useLayoutEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || !clickedPosition) return;
     const spaceFromCursor = 20;
     let left = clickedPosition.pageX + spaceFromCursor;
     let top = clickedPosition.pageY + spaceFromCursor;

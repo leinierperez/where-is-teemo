@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Level } from '../hooks/useLevels';
+import { Level } from '../types/Level';
 function LevelCard({ level }: { level: Level }) {
   return (
     <Link

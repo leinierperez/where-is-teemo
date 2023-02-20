@@ -1,11 +1,9 @@
 import { Profanity, ProfanityOptions } from '@2toad/profanity';
-import { ChampionPosition, Levels } from '../src/hooks/useLevels';
+import { ChampionPosition, Levels } from './types/Level';
+import { ClickedPosition } from './types/ClickedPosition';
 
 export function isClickPositionInChampionPosition(
-  clickedPosition: {
-    championX: number;
-    championY: number;
-  },
+  clickedPosition: ClickedPosition,
   targetChampion: ChampionPosition
 ) {
   return (

@@ -1,5 +1,5 @@
 import LevelCard from '../components/LevelCard';
-import { Levels } from '../hooks/useLevels';
+import { Levels } from '../types/Level';
 
 function Home({ levels }: { levels: Levels }) {
   return (

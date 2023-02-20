@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Levels, Level } from '../hooks/useLevels';
+import { Levels, Level } from '../types/Level';
 import useScores from '../hooks/useScores';
 import { getLevelById } from '../utils';
 

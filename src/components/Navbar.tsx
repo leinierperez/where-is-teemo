@@ -1,6 +1,6 @@
 import teemo from '../assets/teemo.webp';
 import { Link, useParams } from 'react-router-dom';
-import { Levels } from '../hooks/useLevels';
+import { Levels } from '../types/Level';
 import { getLevelById } from '../utils';
 
 type NavbarProps = {

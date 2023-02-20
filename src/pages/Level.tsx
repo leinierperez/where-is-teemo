@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
-import { Levels } from '../hooks/useLevels';
+import { Levels } from '../types/Level';
 import cursorIMG from '../assets/cursor.svg';
 import ChampionPicker from '../components/ChampionPicker';
 import { getLevelById, isClickPositionInChampionPosition } from '../utils';
 import Status from '../components/Status';
 import GameOverModal from '../components/GameOverModal';
+import { ClickedPosition } from '../types/ClickedPosition';
 
 type LevelProps = {
   levels: Levels;
@@ -16,12 +17,7 @@ type LevelProps = {
 function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
   const { id } = useParams();
   const level = getLevelById(levels, Number(id));
-  const [clickedPosition, setClickedPosition] = useState({
-    pageX: 0,
-    pageY: 0,
-    championX: 0,
-    championY: 0,
-  });
+  const [clickedPosition, setClickedPosition] = useState<ClickedPosition>();
   const [isPickerShown, setIsPickerShown] = useState(false);
   const [isStatusShown, setIsStatusShown] = useState(false);
   const [championFound, setChampionFound] = useState('');
@@ -63,6 +59,7 @@ function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
     );
     if (
       targetChampion &&
+      clickedPosition &&
       isClickPositionInChampionPosition(clickedPosition, targetChampion)
     ) {
       setChampionsFound([...championsFound, name]);

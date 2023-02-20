@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { Levels } from '../hooks/useLevels';
+import { Levels } from '../types/Level';
 
 type RootProps = {
   levels: Levels;
