@@ -14,9 +14,9 @@ function Navbar({ levels, championsFound }: NavbarProps) {
 
   return (
     <header
-      className={`bg-secondary py-1 px-4 text-lg font-bold text-primary-100 sm:text-3xl ${
-        id && 'sticky top-0 z-20'
-      }`}
+      className={`
+      bg-secondary py-1 px-4 text-lg font-bold text-primary-100 md:text-xl lg:text-3xl 
+      ${id && 'sticky top-0 z-20'}`}
     >
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between">
         <Link to="/">
@@ -32,7 +32,7 @@ function Navbar({ levels, championsFound }: NavbarProps) {
               return (
                 <img
                   alt={`Icon for champion ${icon.name}`}
-                  className="h-12 w-12 rounded-full border-2 border-primary-100"
+                  className="h-8 w-8 rounded-full border-2 border-primary-100 lg:h-12 lg:w-12"
                   src={icon.url}
                   key={i}
                 />
