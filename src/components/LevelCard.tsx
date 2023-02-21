@@ -11,15 +11,18 @@ function LevelCard({ level }: { level: Level }) {
         src={level.imageURL.small}
         className="h-48 w-full object-cover blur-[6px]"
       />
-      <div className="flex items-center justify-between bg-secondary py-1 px-2">
-        <p className="text-xl font-semibold text-primary-100">{level.name}</p>
-        <div className="flex gap-2">
+      <div className="flex items-center justify-between gap-4 bg-secondary py-1 px-2">
+        <p className="whitespace-nowrap text-sm font-semibold text-primary-100 sm:text-xl">
+          {level.name}
+        </p>
+        <div className="flex flex-wrap gap-1">
           {level.championIcons.map((icon, i) => {
             return (
               <img
                 alt={`Icon for champion ${icon.name}`}
                 key={i}
-                className="h-9 w-9 rounded-full border-2 border-primary-500"
+                className="h-6 w-6 rounded-full border-2 border-primary-500 sm:h-9 sm:w-9 
+                xl:h-8 xl:w-8 2xl:h-9 2xl:w-9"
                 src={icon.url}
               />
             );
