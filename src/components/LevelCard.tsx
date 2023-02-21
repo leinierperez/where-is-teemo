@@ -8,7 +8,7 @@ function LevelCard({ level }: { level: Level }) {
     >
       <img
         alt={`Image for ${level.name}`}
-        src={level.imageURL}
+        src={level.imageURL.small}
         className="h-48 w-full object-cover blur-[6px]"
       />
       <div className="flex items-center justify-between bg-secondary py-1 px-2">

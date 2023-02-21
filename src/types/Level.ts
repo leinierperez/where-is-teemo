@@ -15,10 +15,15 @@ export type ChampionIcon = {
   url: string;
 };
 
+export type ImageURL = {
+  small: string;
+  large: string;
+};
+
 export type Level = {
   id: number;
   name: string;
-  imageURL: string;
+  imageURL: ImageURL;
   championIcons: ChampionIcon[];
   championPositions: ChampionPosition[];
 };

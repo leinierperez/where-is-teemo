@@ -50,8 +50,8 @@ function Leaderboard({ levels }: LeaderboardProps) {
                     </h1>
                     <img
                       alt={`Image for ${level.name}`}
-                      src={level.imageURL}
-                      className="relative aspect-square h-40 object-cover md:w-full"
+                      src={level.imageURL.small}
+                      className="relative aspect-square h-40 object-cover blur-sm md:w-full"
                     />
                   </div>
                 </li>

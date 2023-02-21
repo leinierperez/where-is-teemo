@@ -98,7 +98,7 @@ function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
         )}
         {isStatusShown && <Status championFound={championFound} />}
         <img
-          src={level?.imageURL}
+          src={level?.imageURL.large}
           alt={`Image for ${level?.name}`}
           className="w-full"
           style={{
