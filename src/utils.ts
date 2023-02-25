@@ -1,6 +1,12 @@
 import { Profanity, ProfanityOptions } from '@2toad/profanity';
-import { ChampionPosition, Levels } from './types/Level';
+import { ChampionPosition, Level, Levels } from './types/Level';
 import { ClickedPosition } from './types/ClickedPosition';
+import supabase from './supabaseClient';
+
+type Score = {
+  username: string;
+  levelTimeScore: number;
+};
 
 export function isClickPositionInChampionPosition(
   clickedPosition: ClickedPosition,
@@ -20,8 +26,27 @@ export function getProfanity() {
   return new Profanity(options);
 }
 
-export function getLevelById(levels: Levels, id: number) {
-  const level = levels.find((level) => level.id === id);
-  if (level) return level;
-  return levels[0];
+export async function getLevelById(id: number) {
+  const { data } = await supabase.from('levels').select('*').eq('id', id);
+  if (!data) return;
+  return data[0] as unknown as Level;
+}
+
+export async function getLevels() {
+  const { data } = await supabase
+    .from('levels')
+    .select('*')
+    .order('id', { ascending: true });
+  return data as Levels;
+}
+
+export async function getScores(levelId: number) {
+  const { data } = await supabase
+    .from('levels')
+    .select('scores(username, levelTimeScore)')
+    .eq('id', levelId)
+    .order('levelTimeScore', { foreignTable: 'scores', ascending: true });
+  if (data) {
+    return data[0].scores as Score[];
+  }
 }

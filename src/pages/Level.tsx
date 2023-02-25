@@ -1,22 +1,25 @@
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
-import { Levels } from '../types/Level';
 import cursorIMG from '../assets/cursor.svg';
 import ChampionPicker from '../components/ChampionPicker';
 import { getLevelById, isClickPositionInChampionPosition } from '../utils';
 import Status from '../components/Status';
 import GameOverModal from '../components/GameOverModal';
 import { ClickedPosition } from '../types/ClickedPosition';
+import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 type LevelProps = {
-  levels: Levels;
   championsFound: string[];
   setChampionsFound: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
+function Level({ championsFound, setChampionsFound }: LevelProps) {
   const { id } = useParams();
-  const level = getLevelById(levels, Number(id));
+  const { data: level, isLoading } = useQuery({
+    queryKey: ['levels', id],
+    queryFn: () => getLevelById(Number(id)),
+  });
   const [clickedPosition, setClickedPosition] = useState<ClickedPosition>();
   const [isPickerShown, setIsPickerShown] = useState(false);
   const [isStatusShown, setIsStatusShown] = useState(false);
@@ -97,16 +100,21 @@ function Level({ levels, championsFound, setChampionsFound }: LevelProps) {
           />
         )}
         {isStatusShown && <Status championFound={championFound} />}
-        <img
-          src={level?.imageURL.large}
-          alt={`Image for ${level?.name}`}
-          className="w-full"
-          style={{
-            cursor: `url('${cursorIMG}') 27 27, auto`,
-          }}
-          onClick={handleClick}
-          draggable={false}
-        />
+
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <img
+            src={level?.imageURL.large}
+            alt={`Image for ${level?.name}`}
+            className="w-full"
+            style={{
+              cursor: `url('${cursorIMG}') 27 27, auto`,
+            }}
+            onClick={handleClick}
+            draggable={false}
+          />
+        )}
       </div>
     </main>
   );

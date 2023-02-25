@@ -1,16 +1,13 @@
 import teemo from '../assets/teemo.webp';
 import { Link, useParams } from 'react-router-dom';
-import { Levels } from '../types/Level';
-import { getLevelById } from '../utils';
+import ChampionIconList from './ChampionIconList';
 
 type NavbarProps = {
-  levels: Levels;
   championsFound: string[];
 };
 
-function Navbar({ levels, championsFound }: NavbarProps) {
+function Navbar({ championsFound }: NavbarProps) {
   const { id } = useParams();
-  const levelIcons = getLevelById(levels, Number(id))?.championIcons;
 
   return (
     <header
@@ -25,25 +22,11 @@ function Navbar({ levels, championsFound }: NavbarProps) {
             <h1 className="block">Where's Teemo?</h1>
           </div>
         </Link>
-        {id && (
-          <div className="flex gap-3">
-            {levelIcons?.map((icon, i) => {
-              if (championsFound.includes(icon.name)) return;
-              return (
-                <img
-                  alt={`Icon for champion ${icon.name}`}
-                  className="h-8 w-8 rounded-full border-2 border-primary-100 lg:h-12 lg:w-12"
-                  src={icon.url}
-                  key={i}
-                />
-              );
-            })}
-          </div>
-        )}
+        {id && <ChampionIconList id={id} championsFound={championsFound} />}
         <nav>
           <ul>
             <li>
-              <Link to="/leaderboard">Leaderboard</Link>
+              <Link to="/leaderboard/1">Leaderboard</Link>
             </li>
           </ul>
         </nav>

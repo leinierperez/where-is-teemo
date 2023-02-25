@@ -1,37 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Levels, Level } from '../types/Level';
-import useScores from '../hooks/useScores';
-import { getLevelById } from '../utils';
+import { Level } from '../types/Level';
+import { getLevels, getScores } from '../utils';
+import { useQuery } from '@tanstack/react-query';
 
-type LeaderboardProps = {
-  levels: Levels;
-};
-
-function Leaderboard({ levels }: LeaderboardProps) {
+function Leaderboard() {
   const { levelId } = useParams();
+  const {
+    data: scores,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['scores', levelId],
+    queryFn: () => getScores(Number(levelId)),
+  });
+  const { data: levels } = useQuery({
+    queryKey: ['levels'],
+    queryFn: () => getLevels(),
+  });
   const [currentLevel, setCurrentLevel] = useState<Level | undefined>();
-  const [scores, isLoading, isError] = useScores(currentLevel?.id);
 
-  const handleClick = (levelId: Level) => {
-    setCurrentLevel(levelId);
+  const handleClick = (level: Level) => {
+    setCurrentLevel(level);
   };
-
-  useEffect(() => {
-    if (levelId) {
-      const level = getLevelById(levels, Number(levelId));
-      setCurrentLevel(level);
-    } else {
-      setCurrentLevel(levels[0]);
-    }
-  }, [levels, levelId]);
 
   return (
     <main className="mx-auto max-w-screen-lg py-6 px-4 font-semibold tracking-wide">
       <div>
         <ul className="grid grid-cols-2 justify-items-center gap-3 sm:grid-cols-3 md:justify-items-stretch">
-          {levels.map((level, i) => {
+          {levels?.map((level, i) => {
             return (
               <Link to={`/leaderboard/${level.id}`} key={i}>
                 <li
@@ -41,7 +39,7 @@ function Leaderboard({ levels }: LeaderboardProps) {
                   <div className="relative">
                     <h1
                       className={`absolute z-10 w-full ${
-                        currentLevel?.id === level.id
+                        Number(levelId) === level.id
                           ? 'bg-yellow-600'
                           : 'bg-primary-500'
                       } text-center text-white`}
