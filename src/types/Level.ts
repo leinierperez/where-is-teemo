@@ -21,7 +21,7 @@ export type ImageURL = {
 };
 
 export type Level = {
-  id: number;
+  id: string;
   name: string;
   imageURL: ImageURL;
   championIcons: ChampionIcon[];

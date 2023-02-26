@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import supabase from '../supabaseClient';
-import { getProfanity } from '../utils';
+import { getProfanity, saveScore } from '../utils';
+import { useMutation } from '@tanstack/react-query';
+import { MutationParams } from '../types/MutationParams';
 
 type GameOverModalProps = {
   elapsedSeconds: number;
@@ -14,6 +15,10 @@ function GameOverModal({ elapsedSeconds, setIsGameOver }: GameOverModalProps) {
   const [username, setUsername] = useState<string>('');
   const [isUsernameProfane, setIsUsernameProfane] = useState(false);
   const profanity = getProfanity();
+  const mutation = useMutation({
+    mutationFn: ({ username, id, elapsedSeconds }: MutationParams) =>
+      saveScore({ username, id, elapsedSeconds }),
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +27,7 @@ function GameOverModal({ elapsedSeconds, setIsGameOver }: GameOverModalProps) {
       return;
     }
     setIsGameOver(false);
-    await saveScore();
+    handleScoreSubmission();
   };
 
   const handleChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,18 +37,11 @@ function GameOverModal({ elapsedSeconds, setIsGameOver }: GameOverModalProps) {
     }
   };
 
-  const saveScore = async () => {
-    try {
-      const result = await supabase.from('scores').insert({
-        username,
-        levelId: id,
-        levelTimeScore: elapsedSeconds,
-      });
-      if (result.error) {
-        throw new Error(result.error.message);
-      }
-    } catch (error) {
-      console.error('Error saving score: ', error);
+  const handleScoreSubmission = () => {
+    if (!id) return;
+    mutation.mutate({ username, id, elapsedSeconds });
+    if (mutation.isError) {
+      console.error('Error saving score');
       navigate('/error');
       return;
     }

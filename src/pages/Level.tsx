@@ -18,8 +18,9 @@ function Level({ championsFound, setChampionsFound }: LevelProps) {
   const { id } = useParams();
   const { data: level, isLoading } = useQuery({
     queryKey: ['levels', id],
-    queryFn: () => getLevelById(Number(id)),
+    queryFn: () => getLevelById(id),
   });
+  // console.log(id, level);
   const [clickedPosition, setClickedPosition] = useState<ClickedPosition>();
   const [isPickerShown, setIsPickerShown] = useState(false);
   const [isStatusShown, setIsStatusShown] = useState(false);

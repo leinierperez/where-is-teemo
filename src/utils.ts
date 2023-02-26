@@ -1,11 +1,23 @@
 import { Profanity, ProfanityOptions } from '@2toad/profanity';
 import { ChampionPosition, Level, Levels } from './types/Level';
 import { ClickedPosition } from './types/ClickedPosition';
-import supabase from './supabaseClient';
+import { db } from './firebase';
+import {
+  collection,
+  query,
+  orderBy,
+  getDocs,
+  where,
+  doc,
+  getDoc,
+  addDoc,
+} from 'firebase/firestore';
+import { MutationParams } from './types/MutationParams';
 
 type Score = {
   username: string;
   levelTimeScore: number;
+  levelId: string;
 };
 
 export function isClickPositionInChampionPosition(
@@ -26,27 +38,48 @@ export function getProfanity() {
   return new Profanity(options);
 }
 
-export async function getLevelById(id: number) {
-  const { data } = await supabase.from('levels').select('*').eq('id', id);
-  if (!data) return;
-  return data[0] as unknown as Level;
+export async function getLevelById(id: string | undefined) {
+  if (!id) return;
+  const levelsRef = doc(db, 'levels', id);
+  const docSnap = await getDoc(levelsRef);
+  return docSnap.data() as Level;
 }
 
 export async function getLevels() {
-  const { data } = await supabase
-    .from('levels')
-    .select('*')
-    .order('id', { ascending: true });
-  return data as Levels;
+  let levels = [] as Levels;
+  const q = query(collection(db, 'levels'), orderBy('name', 'asc'));
+  const snapShot = await getDocs(q);
+  snapShot.forEach((doc) => {
+    levels.push({
+      ...(doc.data() as Omit<Level, 'id'>),
+      id: doc.id,
+    });
+  });
+  return levels as Levels;
 }
 
-export async function getScores(levelId: number) {
-  const { data } = await supabase
-    .from('levels')
-    .select('scores(username, levelTimeScore)')
-    .eq('id', levelId)
-    .order('levelTimeScore', { foreignTable: 'scores', ascending: true });
-  if (data) {
-    return data[0].scores as Score[];
-  }
+export async function getScores(levelId: string | undefined) {
+  let scores = [] as Score[];
+  const q = query(
+    collection(db, 'scores'),
+    where('levelId', '==', levelId),
+    orderBy('levelTimeScore', 'asc')
+  );
+  const snapShot = await getDocs(q);
+  snapShot.forEach((doc) => {
+    scores.push(doc.data() as Score);
+  });
+  return scores;
+}
+
+export async function saveScore({
+  username,
+  id,
+  elapsedSeconds,
+}: MutationParams) {
+  await addDoc(collection(db, 'scores'), {
+    username,
+    levelId: id,
+    levelTimeScore: elapsedSeconds,
+  });
 }

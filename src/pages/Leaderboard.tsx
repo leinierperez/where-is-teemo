@@ -13,13 +13,15 @@ function Leaderboard() {
     isError,
   } = useQuery({
     queryKey: ['scores', levelId],
-    queryFn: () => getScores(Number(levelId)),
+    queryFn: () => getScores(levelId),
   });
   const { data: levels } = useQuery({
     queryKey: ['levels'],
     queryFn: () => getLevels(),
   });
-  const [currentLevel, setCurrentLevel] = useState<Level | undefined>();
+  const [currentLevel, setCurrentLevel] = useState<Level | undefined>(
+    levels?.[0]
+  );
 
   const handleClick = (level: Level) => {
     setCurrentLevel(level);
@@ -39,7 +41,7 @@ function Leaderboard() {
                   <div className="relative">
                     <h1
                       className={`absolute z-10 w-full ${
-                        Number(levelId) === level.id
+                        levelId === level.id
                           ? 'bg-yellow-600'
                           : 'bg-primary-500'
                       } text-center text-white`}
