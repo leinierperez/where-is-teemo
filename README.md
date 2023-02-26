@@ -14,5 +14,6 @@ https://user-images.githubusercontent.com/60529713/220208418-78dbb8d3-92f2-49b6-
 
 - [React](https://reactjs.org/)
 - [React-router-dom](https://reactrouter.com/en/main)
-- [Supabase](https://supabase.com/)
+- [firebase](https://firebase.google.com/)
 - [tailwindcss](https://tailwindcss.com/)
+- [Tanstack Query](https://tanstack.com/query/latest)
