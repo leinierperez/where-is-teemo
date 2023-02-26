@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Level } from '../types/Level';
@@ -19,9 +19,12 @@ function Leaderboard() {
     queryKey: ['levels'],
     queryFn: () => getLevels(),
   });
-  const [currentLevel, setCurrentLevel] = useState<Level | undefined>(
-    levels?.[0]
-  );
+  const [currentLevel, setCurrentLevel] = useState<Level | undefined>();
+
+  useEffect(() => {
+    const currLevel = levels?.find((level) => level.id === levelId);
+    setCurrentLevel(currLevel);
+  }, [levels]);
 
   const handleClick = (level: Level) => {
     setCurrentLevel(level);

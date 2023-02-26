@@ -1,6 +1,8 @@
 import teemo from '../assets/teemo.webp';
 import { Link, useParams } from 'react-router-dom';
 import ChampionIconList from './ChampionIconList';
+import { useQuery } from '@tanstack/react-query';
+import { getLevels } from '../utils';
 
 type NavbarProps = {
   championsFound: string[];
@@ -8,7 +10,10 @@ type NavbarProps = {
 
 function Navbar({ championsFound }: NavbarProps) {
   const { id } = useParams();
-
+  const { data: levels } = useQuery({
+    queryKey: ['levels'],
+    queryFn: () => getLevels(),
+  });
   return (
     <header
       className={`
@@ -26,7 +31,7 @@ function Navbar({ championsFound }: NavbarProps) {
         <nav>
           <ul>
             <li>
-              <Link to="/leaderboard/1">Leaderboard</Link>
+              <Link to={`/leaderboard/${levels?.[0].id}`}>Leaderboard</Link>
             </li>
           </ul>
         </nav>

@@ -7,13 +7,13 @@ type ChampionIconsProps = {
 };
 
 function ChampionIconList({ id, championsFound }: ChampionIconsProps) {
-  const { data: levels } = useQuery({
+  const { data: level } = useQuery({
     queryKey: ['levels', id],
     queryFn: () => getLevelById(id),
   });
   return (
     <div className="flex gap-3">
-      {levels?.championIcons?.map((icon, i) => {
+      {level?.championIcons?.map((icon, i) => {
         if (championsFound.includes(icon.name)) return;
         return (
           <img

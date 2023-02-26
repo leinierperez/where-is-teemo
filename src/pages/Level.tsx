@@ -20,7 +20,6 @@ function Level({ championsFound, setChampionsFound }: LevelProps) {
     queryKey: ['levels', id],
     queryFn: () => getLevelById(id),
   });
-  // console.log(id, level);
   const [clickedPosition, setClickedPosition] = useState<ClickedPosition>();
   const [isPickerShown, setIsPickerShown] = useState(false);
   const [isStatusShown, setIsStatusShown] = useState(false);
