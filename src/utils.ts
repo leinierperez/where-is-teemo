@@ -42,7 +42,10 @@ export async function getLevelById(id: string | undefined) {
   if (!id) return;
   const levelsRef = doc(db, 'levels', id);
   const docSnap = await getDoc(levelsRef);
-  return docSnap.data() as Level;
+  return {
+    ...docSnap.data(),
+    id: docSnap.id,
+  } as Level;
 }
 
 export async function getLevels() {
